@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:state_management_practise/Provider/Counter_provider.dart';
-import 'package:state_management_practise/Provider/ProviderClass.dart';
+import 'package:state_management_practise/StateManagementByStatefull/ProviderClass.dart';
+import 'package:state_management_practise/Provider/ThemeProvider.dart';
 import 'package:state_management_practise/Provider/TimeProvider.dart';
 import 'StateManagementByStatefull/CounterPage.dart';
 import 'package:provider/provider.dart';
@@ -18,16 +19,31 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_)=> TimeProvider()),
-        ChangeNotifierProvider(create: (_) => CountProvider())
+        ChangeNotifierProvider(create: (_) => CountProvider()),
+        ChangeNotifierProvider(create: (_)=> ThemeProvider())
       ],
-      child: MaterialApp(
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-          useMaterial3: true,
-        ),
-        home: const ProviderClass(),
-      ),
+      child: Builder(builder: (BuildContext context){
+        final themeChanged= Provider.of<ThemeProvider>(context);
+        return MaterialApp(
+          title: 'Flutter Demo',
+          themeMode: themeChanged.themeChange,
+          theme: ThemeData(
+            colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+            useMaterial3: true,
+            appBarTheme: AppBarTheme(
+
+            )
+          ),
+          darkTheme: ThemeData(
+            brightness: Brightness.dark,
+            appBarTheme: const AppBarTheme(
+              color: Colors.white70
+            ),
+            primaryColorDark: Colors.grey
+          ),
+          home: const ProviderClass(),
+        );
+      })
     );
   }
 }
