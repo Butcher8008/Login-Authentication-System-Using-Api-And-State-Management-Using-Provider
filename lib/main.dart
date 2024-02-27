@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:state_management_practise/Provider/Counter_provider.dart';
+import 'package:state_management_practise/Provider/LoginProvider.dart';
+import 'package:state_management_practise/StateManagementByStatefull/LoginScreen.dart';
 import 'package:state_management_practise/StateManagementByStatefull/ProviderClass.dart';
 import 'package:state_management_practise/Provider/ThemeProvider.dart';
 import 'package:state_management_practise/Provider/TimeProvider.dart';
@@ -20,7 +22,8 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (_)=> TimeProvider()),
         ChangeNotifierProvider(create: (_) => CountProvider()),
-        ChangeNotifierProvider(create: (_)=> ThemeProvider())
+        ChangeNotifierProvider(create: (_)=> ThemeProvider()),
+        ChangeNotifierProvider(create: (_)=> AuthProvider())
       ],
       child: Builder(builder: (BuildContext context){
         final themeChanged= Provider.of<ThemeProvider>(context);
@@ -30,8 +33,8 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(
             colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
             useMaterial3: true,
-            appBarTheme: AppBarTheme(
-
+            appBarTheme: const AppBarTheme(
+              color: Colors.greenAccent
             )
           ),
           darkTheme: ThemeData(
@@ -41,7 +44,7 @@ class MyApp extends StatelessWidget {
             ),
             primaryColorDark: Colors.grey
           ),
-          home: const ProviderClass(),
+          home: const LoginScreen(),
         );
       })
     );
